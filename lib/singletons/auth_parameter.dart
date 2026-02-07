@@ -1,6 +1,9 @@
+import 'package:flutter_auth/singletons/random_string_generator.dart';
+
 class AuthParameter {
   static final AuthParameter _instance = AuthParameter._internal();
-  static const String authorizationEndpoint = 'https://example.com/oauth/authorize';
+  // エミュレータから localhost に接続する場合は 10.0.2.2 にする
+  static const String authorizationEndpoint = 'http://10.0.2.2:3000/oauth/authorize';
 
   AuthParameter._internal();
 
@@ -15,6 +18,8 @@ class AuthParameter {
   String codeVerifier = '';
 
   String buildAuthorizationEndpointUri() {
-    return authorizationEndpoint;
+    state = RandomStringGenerator().generateString();
+    nonce = RandomStringGenerator().generateString();
+    return '$authorizationEndpoint?state=$state&nonce=$nonce';
   }
 }
