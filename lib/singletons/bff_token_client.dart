@@ -16,9 +16,7 @@ class BffTokenClient {
   Future<String> fetchData(String code) async {
     final response = await http.post(
       Uri.parse(tokenEndpoint),
-      headers: <String, String>{
-        'Content-Type': 'application/json',
-      },
+      headers: <String, String>{'Content-Type': 'application/json'},
       body: jsonEncode(<String, String>{
         'code': code,
         'state': AuthParameter().state,

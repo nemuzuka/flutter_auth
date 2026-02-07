@@ -3,12 +3,11 @@ import 'package:flutter_auth/singletons/auth_parameter.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 
 /// 認可コードフローを開始する Widget.
-class InitializeAuthorizationWidget extends StatelessWidget{
+class InitializeAuthorizationWidget extends StatelessWidget {
   const InitializeAuthorizationWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-
     // 画面が表示された（ビルドが完了した）タイミングで一度だけ実行
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _launchURL(context);
@@ -22,7 +21,8 @@ class InitializeAuthorizationWidget extends StatelessWidget{
   }
 
   Future<void> _launchURL(BuildContext context) async {
-    var authorizationEndpointUri = AuthParameter().buildAuthorizationEndpointUri();
+    var authorizationEndpointUri = AuthParameter()
+        .buildAuthorizationEndpointUri();
     final theme = Theme.of(context);
     try {
       await launchUrl(
@@ -48,5 +48,4 @@ class InitializeAuthorizationWidget extends StatelessWidget{
       debugPrint(e.toString());
     }
   }
-
 }

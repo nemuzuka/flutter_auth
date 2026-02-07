@@ -9,15 +9,12 @@ class CallbackWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await BffTokenClient().fetchData(code);
       if (!context.mounted) return;
       context.go('/');
     });
 
-    return Scaffold(
-      body: Center(child: CircularProgressIndicator()),
-    );
+    return Scaffold(body: Center(child: CircularProgressIndicator()));
   }
 }

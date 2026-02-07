@@ -42,7 +42,8 @@ class AppRouter {
       final token = await storage.read(key: 'bff_token');
       final bool isLoggedIn = token != null;
 
-      final bool isLoggingIn = state.matchedLocation == '/initialize-authorization';
+      final bool isLoggingIn =
+          state.matchedLocation == '/initialize-authorization';
       final bool isAuthCallback = state.matchedLocation == '/auth-callback';
 
       // ログインしていなくて、かつ今ログイン画面にいないなら、ログイン画面へ
@@ -57,6 +58,6 @@ class AppRouter {
 
       // 問題なければそのまま表示
       return null;
-    }
+    },
   );
 }
