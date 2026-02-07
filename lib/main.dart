@@ -1,8 +1,16 @@
+import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/singletons/auth_parameter.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 
-void main() {
+import 'handler/link_handler.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final handler = LinkHandler();
+  handler.initDeepLinks();
+
   runApp(const MyApp());
 }
 
