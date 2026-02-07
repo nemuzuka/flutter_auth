@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_auth/singletons/auth_parameter.dart';
+import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 
 void main() {
   runApp(const MyApp());
@@ -113,10 +115,39 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
+        onPressed: () => _launchURL(context),
+        tooltip: '認可コードフロー開始',
         child: const Icon(Icons.add),
       ),
     );
   }
+
+  Future<void> _launchURL(BuildContext context) async {
+    var authorizationEndpointUri = AuthParameter().buildAuthorizationEndpointUri();
+    final theme = Theme.of(context);
+    try {
+      await launchUrl(
+        Uri.parse(authorizationEndpointUri),
+        customTabsOptions: CustomTabsOptions(
+          colorSchemes: CustomTabsColorSchemes.defaults(
+            toolbarColor: theme.primaryColor,
+          ),
+          shareState: CustomTabsShareState.on,
+          urlBarHidingEnabled: true,
+          showTitle: true,
+        ),
+        safariVCOptions: SafariViewControllerOptions(
+          preferredBarTintColor: theme.primaryColor,
+          preferredControlTintColor: Colors.white,
+          barCollapsingEnabled: true,
+          entersReaderIfAvailable: false,
+          dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
+        ),
+      );
+    } catch (e) {
+      // プラットフォームが対応していない場合などのハンドリング
+      debugPrint(e.toString());
+    }
+  }
+
 }
