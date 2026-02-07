@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../singletons/bff_token_client.dart';
 
@@ -8,29 +9,15 @@ class CallbackWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await BffTokenClient().fetchData(code);
+      if (!context.mounted) return;
+      context.go('/');
+    });
+
     return Scaffold(
-      appBar: AppBar(title: const Text('CallBack')),
-        body: Center(
-          child: FutureBuilder<String>(
-            future: BffTokenClient().fetchData(code),
-            builder: (context, snapshot) {
-              // 1. 通信中の表示
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const CircularProgressIndicator();
-              }
-              // 2. エラー発生時の表示
-              else if (snapshot.hasError) {
-                return Text('エラーが発生しました: ${snapshot.error}');
-              }
-              // 3. データ取得完了後の表示
-              else if (snapshot.hasData) {
-                // TODO ページ遷移
-                return Text('サーバーからの返答: ${snapshot.data}');
-              }
-              return const Text('データがありません');
-            },
-          )
-        )
+      body: Center(child: CircularProgressIndicator()),
     );
   }
 }

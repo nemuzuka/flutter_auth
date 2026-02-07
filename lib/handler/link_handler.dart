@@ -23,7 +23,7 @@ class LinkHandler {
 
     if (path == '/auth-callback') {
       final code = params['code'];
-      AppRouter().router.push('/auth-callback?code=$code');
+      AppRouter().router.go('/auth-callback?code=$code');
     }
   }
 }
