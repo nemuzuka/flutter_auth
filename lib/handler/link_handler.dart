@@ -1,4 +1,5 @@
 import 'package:app_links/app_links.dart';
+import 'package:flutter_auth/singletons/app_router.dart';
 
 class LinkHandler {
   final _appLinks = AppLinks();
@@ -17,13 +18,12 @@ class LinkHandler {
   }
 
   void _handleUri(Uri uri) {
-    print('--- リンク検知成功！ ---');
-    // 例: my-app://example?id=123&name=flutter
-    print('Path: ${uri.path}');
+    final path = uri.path;
+    final params = uri.queryParameters;
 
-    // クエリパラメータを Map 形式で取得
-    Map<String, String> params = uri.queryParameters;
-    print('ID: ${params['id']}'); // "123"
-    print('Name: ${params['name']}'); // "flutter"
+    if (path == '/auth-callback') {
+      final code = params['code'];
+      AppRouter().router.push('/auth-callback?code=$code');
+    }
   }
 }
