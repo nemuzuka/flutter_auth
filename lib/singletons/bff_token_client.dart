@@ -21,6 +21,7 @@ class BffTokenClient {
         'code': code,
         'state': AuthParameter().state,
         'nonce': AuthParameter().nonce,
+        'codeVerifier': AuthParameter().codeVerifier,
       }),
     );
     if (response.statusCode == 200) {

@@ -13,9 +13,12 @@ class InitializeAuthorizationWidget extends StatelessWidget {
       _launchURL(context);
     });
 
-    return const Scaffold(
-      body: Center(
-        child: CircularProgressIndicator(), // 遷移するまでの待機表示
+    return Scaffold(
+      body: Center(child: Center(child: Text('ログイン処理を行ってください'))),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _launchURL(context),
+        tooltip: 'ログイン処理を行う',
+        child: const Icon(Icons.login),
       ),
     );
   }

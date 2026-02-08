@@ -1,5 +1,7 @@
 import 'package:flutter_auth/singletons/random_string_generator.dart';
 
+import '../util/custom_pkce_pair.dart';
+
 class AuthParameter {
   static final AuthParameter _instance = AuthParameter._internal();
   // エミュレータから localhost に接続する場合は 10.0.2.2 にする
@@ -21,6 +23,9 @@ class AuthParameter {
   String buildAuthorizationEndpointUri() {
     state = RandomStringGenerator().generateString();
     nonce = RandomStringGenerator().generateString();
-    return '$authorizationEndpoint?state=$state&nonce=$nonce';
+    final pkcePair = CustomPkcePair.generate();
+    codeVerifier = pkcePair.codeVerifier;
+    codeChallenge = pkcePair.codeChallenge;
+    return '$authorizationEndpoint?state=$state&nonce=$nonce&code_challenge=$codeChallenge';
   }
 }
